@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use App\Models\Category;
@@ -31,16 +32,16 @@ Route::get('/', function () {
 //     ]);
 // })->where("post", "[A-Za-z\-0-9]+");
 
-Route::get("/posts/{post:slug}", function(Post $post){
-    return view("post", [
-        "post" => $post
-    ]);
-})->where("post", "[A-Za-z_\-0-9]+");
+Route::get("/posts/{post:slug}", [PostController::class, "show"] 
+    // return view("post", [
+    //     "post" => $post
+    // ]);
+)->where("post", "[A-Za-z_\-0-9]+");
 
 
 
 
-Route::get("/posts", function(){
+Route::get("/posts", [PostController::class, "index"]
     // $posts = [[
     //     "title" => "First Title",
     //     "slug" => "first-title",
@@ -64,12 +65,18 @@ Route::get("/posts", function(){
     // return view("posts", [
     //     "posts" => Post::all()
     // ]);
-
-    return view("posts", [
-        "posts" => Post::latest()->with("category", "author")->get(),
-        "categories" => Category::all()
-    ]);
-})->name("homePosts");
+    // $posts = Post::latest();
+    // if( request("search")){
+    //     $posts->where("title", "like", "%" . request("search") . "%")
+    //         ->orWhere("body", "like", "%" . request("search") . "%");
+    // }
+    
+    
+    // return view("posts", [
+    //     "posts" => $posts->get(),
+    //     "categories" => Category::all()
+    // ]);
+)->name("homePosts");
 
 Route::get("/categories/{category:slug}", function(Category $category){
     return view("posts", [
@@ -83,7 +90,7 @@ Route::get("/categories/{category:slug}", function(Category $category){
 Route::get("/authors/{author:username}", function(User $author){
     return view("posts", [
         "posts" => $author->posts->load(["category", "author"]),
-        "categories" => Category::all()
+        //"categories" => Category::all() fixed in categoryComponent.php
     ]);  
 });
 
