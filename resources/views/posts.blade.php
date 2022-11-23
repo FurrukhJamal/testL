@@ -53,6 +53,9 @@
                 <x-slot:authorName>
                     {{$posts[0]->author->name}}
                 </x-slot:authorName>
+                <x-slot:authorUsername>
+                    {{$posts[0]->author->username}}
+                </x-slot:authorUsername>
             </x-component-feature>
 
             <div class="lg:grid lg:grid-cols-2">
@@ -82,6 +85,9 @@
                         <x-slot:authorName>
                             {{$post->author->name}}
                         </x-slot:authorName>
+                        <x-slot:authorUserName>
+                            {{$post->author->username}}
+                        </x-slot:authorUserName>
                     </x-post-card>
                 @endforeach
             </div>
@@ -110,6 +116,9 @@
                         <x-slot:authorName>
                             {{$post->author->name}}
                         </x-slot:authorName>
+                        <x-slot:authorUserName>
+                            {{$post->author->username}}
+                        </x-slot:authorUserName>
                     </x-post-card>    
                 @endforeach                  
                 

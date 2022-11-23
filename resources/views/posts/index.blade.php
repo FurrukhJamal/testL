@@ -19,7 +19,7 @@
 
 @section("content")
     
-@include("_header-filter")
+@include("posts._header-filter")
 
         <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
         <?php /*<!-- <x-feature-post/>
@@ -30,7 +30,7 @@
             <x-feature-post/> 
             
             <x-feature-post :post = "$posts[0]" />*/?>
-
+            @if(count($posts) > 0)
             <x-component-feature>
                 <x-slot:categorySlug>
                     {{$posts[0]->category->slug}}
@@ -53,6 +53,10 @@
                 <x-slot:authorName>
                     {{$posts[0]->author->name}}
                 </x-slot:authorName>
+                <x-slot:userName>
+                    {{$posts[0]->author->username}}
+                </x-slot:userName>
+                
             </x-component-feature>
 
             <div class="lg:grid lg:grid-cols-2">
@@ -82,6 +86,9 @@
                         <x-slot:authorName>
                             {{$post->author->name}}
                         </x-slot:authorName>
+                        <x-slot:userName>
+                            {{$post->author->username}}
+                        </x-slot:userName>
                     </x-post-card>
                 @endforeach
             </div>
@@ -110,11 +117,21 @@
                         <x-slot:authorName>
                             {{$post->author->name}}
                         </x-slot:authorName>
+                        <x-slot:userName>
+                            {{$post->author->username}}
+                        </x-slot:userName>
+                        
                     </x-post-card>    
                 @endforeach                  
                 
                 
             </div>
+            @else
+                <div class ="text-center">
+                    <p>no posts to show</p>
+                </div>
+            @endif 
+
         </main>
     
 @endsection

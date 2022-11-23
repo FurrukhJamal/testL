@@ -1,3 +1,4 @@
+
 <div x-data = "{show : false}">
     {{--triger--}}
     <button 
@@ -18,9 +19,16 @@
     <div x-show = "show" style = "display : none;" class = "overflow-auto max-h-32 z-50 py-2 absolute bg-gray-100 w-full mt-2 rounded-xl">
         <a href="/posts" class = "block text-left px-3 text-sm leading-4 
         focus:text-white hover:text-white hover:bg-blue-500 focus:bg-gray-300 ">All</a>
-
+        {{--
         @foreach($categories as $category)
             <a href="/categories/{{$category->slug}}" 
+            class = "block text-left px-3 text-sm leading-4 focus:text-white 
+            hover:text-white 
+            hover:bg-blue-500 focus:bg-gray-300 {{isset($currentCategory) && $currentCategory->id == $category->id ? "bg-blue-300 text-white" : ""}}">{{$category->name}}</a>
+        @endforeach --}}
+
+        @foreach($categories as $category)
+            <a href="/posts/?category={{$category->slug}}&{{http_build_query(request()->except("category"))}}" 
             class = "block text-left px-3 text-sm leading-4 focus:text-white 
             hover:text-white 
             hover:bg-blue-500 focus:bg-gray-300 {{isset($currentCategory) && $currentCategory->id == $category->id ? "bg-blue-300 text-white" : ""}}">{{$category->name}}</a>

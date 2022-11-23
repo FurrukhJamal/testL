@@ -32,15 +32,6 @@ Route::get('/', function () {
 //     ]);
 // })->where("post", "[A-Za-z\-0-9]+");
 
-Route::get("/posts/{post:slug}", [PostController::class, "show"] 
-    // return view("post", [
-    //     "post" => $post
-    // ]);
-)->where("post", "[A-Za-z_\-0-9]+");
-
-
-
-
 Route::get("/posts", [PostController::class, "index"]
     // $posts = [[
     //     "title" => "First Title",
@@ -78,19 +69,32 @@ Route::get("/posts", [PostController::class, "index"]
     // ]);
 )->name("homePosts");
 
-Route::get("/categories/{category:slug}", function(Category $category){
-    return view("posts", [
-        "posts" => $category->posts->load(["category", "author"]),
-        "currentCategory" => $category,
-        "categories" => Category::all()
-    ]);  
-})->name("category");
 
 
-Route::get("/authors/{author:username}", function(User $author){
-    return view("posts", [
-        "posts" => $author->posts->load(["category", "author"]),
-        //"categories" => Category::all() fixed in categoryComponent.php
-    ]);  
-});
+
+Route::get("/posts/{post:slug}", [PostController::class, "show"] 
+    // return view("post", [
+    //     "post" => $post
+    // ]);
+)->where("post", "[A-Za-z_\-0-9]+");
+
+
+
+
+
+// Route::get("/categories/{category:slug}", function(Category $category){
+//     return view("posts.index", [
+//         "posts" => $category->posts->load(["category", "author"]),
+//         "currentCategory" => $category,
+//         "categories" => Category::all()
+//     ]);  
+// })->name("category");
+
+
+// Route::get("/authors/{author:username}", function(User $author){
+//     return view("posts.index", [
+//         "posts" => $author->posts->load(["category", "author"]),
+//         "categories" => Category::all() //fixed in categoryComponent.php
+//     ]);  
+// });
 

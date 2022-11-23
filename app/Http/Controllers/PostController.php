@@ -20,10 +20,17 @@ class PostController extends Controller
         //     "posts" => $this->getPost(),
         //     "categories" => Category::all()
         // ]);
-
+        
+        // dd(Category::where("slug" ,request("category"))->first());
+        //$currentCategory =  Category::where("slug" , request("category"))->first();   
+        
         return view("posts.index", [
             "posts" => $this->getPost(),
-            "categories" => Category::all()
+            "categories" => Category::all(), //now getting from CategoryDropdown.php
+            // "test" => "heelo world",
+            // "currentCategory" => $currentCategory,
+            
+
         ]);
     }
 
@@ -45,7 +52,7 @@ class PostController extends Controller
         // }
         // return $posts->get();
 
-        return Post::latest()->filter()->get();
+        return Post::latest()->filter(request(["search", "category", "author"]))->get();
         // dd(request(["search"]));
         // Post::latest()->filter(request(["search"]))->get();
     }
