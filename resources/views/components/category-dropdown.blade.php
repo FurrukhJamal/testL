@@ -28,7 +28,7 @@
         @endforeach --}}
 
         @foreach($categories as $category)
-            <a href="/posts/?category={{$category->slug}}&{{http_build_query(request()->except("category"))}}" 
+            <a href="/posts/?category={{$category->slug}}&{{http_build_query(request()->except("category" , "page"))}}" 
             class = "block text-left px-3 text-sm leading-4 focus:text-white 
             hover:text-white 
             hover:bg-blue-500 focus:bg-gray-300 {{isset($currentCategory) && $currentCategory->id == $category->id ? "bg-blue-300 text-white" : ""}}">{{$category->name}}</a>

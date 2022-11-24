@@ -124,7 +124,8 @@
                     </x-post-card>    
                 @endforeach                  
                 
-                
+            </div class = "text-center">
+                {{$posts->links()}}   
             </div>
             @else
                 <div class ="text-center">
