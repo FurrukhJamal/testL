@@ -22,8 +22,12 @@ class RegisterController extends Controller
             "password" => "required|max:25|min:6",
         ]);
 
-        User::create($attributes);
+        
+        $user = User::create($attributes);
 
-        return redirect("/posts");
+        //session()->flash("success", "your account has been created");
+        
+        auth()->login($user);
+        return redirect("/posts")->with("success", "your account has been created");
     }
 }

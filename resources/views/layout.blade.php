@@ -16,4 +16,5 @@
         @include("_post-footer")
         
     </section>
+    <x-flash/>
 </body>
