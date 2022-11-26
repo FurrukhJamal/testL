@@ -73,6 +73,41 @@
                         
                     </div>
                 </div>
+                <section class = "col-span-8 col-start-5 mt-10 space-y-5">
+                    @auth
+                        <form action = "/posts/{{$post->slug}}/comments" method = "POST" class = "border border-gray-200 rounded-xl p-6">
+                            @csrf
+                            <header class = "flex items-center">
+                                <img class = "rounded-full" src="https://i.pravatar.cc/60" alt="" width = "40" height = "40">
+                                <h2 class = "ml-8">Wanna Comment?</h2>
+                            </header>
+                            <div>
+                                <textarea rows = "6" placeholder = "What's up" class = "border border-gray-100 w-full mt-5 focus:outline-none focus:ring" name = "comment">
+
+                                </textarea>
+                            </div>
+                            <div class = "flex justify-end">
+                                <button class = "px-5 bg-blue-500 hover:bg-blue-200 hover:text-white font-semibold p-2 rounded-2xl" type = "submit">Post</button>
+                            </div> 
+                        </form>
+                        @else
+                        <p class = "text-semibold"><a href="login" class = "hover:underline hover:text-blue-300">Log In </a> or <a href="register" class = "hover:underline hover:text-blue-300">Register</a> To Comment</p>
+                    @endauth
+                    @foreach($post->comments as $comment)
+                        <x-post-comment>
+                            <x-slot:body>
+                                {{$comment->body}}
+                            </x-slot:body>
+                            <x-slot:createdAt>
+                                {{$comment->created_at->diffForHumans()}}
+                            </x-slot:createdAt>
+                            <x-slot:userName>
+                                {{$comment->author->username}}
+                            </x-slot:userName>
+                        </x-post-comment>
+                    @endforeach
+                </section>
+                
             </article>
         </main>
 @endsection
