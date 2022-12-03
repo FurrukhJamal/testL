@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NewsLetterController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
@@ -9,6 +10,9 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Services\Newsletter;
+use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Validation\ValidationException;
 
 /*
 |--------------------------------------------------------------------------
@@ -108,3 +112,74 @@ Route::post("/login", [SessionsController::class, "store"])->middleware("guest")
 Route::get("/login", [SessionsController::class, "create"])->middleware("guest");
 // Route::post("posts/{post:slug}/comments", [CommentController::class, "store"]);
 
+
+
+Route::get("ping", function(){
+    // require_once('/path/to/MailchimpMarketing/vendor/autoload.php');
+    //require_once('/vendor/mailchimp/marketing/vendor/autoload.php');
+
+    $mailchimp = new \MailchimpMarketing\ApiClient();
+
+    $mailchimp->setConfig([
+        'apiKey' => config("services.mailchimp.key"),
+        'server' => 'us21'
+    ]);
+
+    //$response = $mailchimp->ping->get();
+    // $response = $mailchimp->lists->getAllLists();
+    // $response = $mailchimp->lists->getList("e098faa1dd");
+    $response = $mailchimp->lists->addListMember("e098faa1dd", [
+        "email_address" => "greenbrett85@gmail.com",
+        "status" => "subscribed"
+    ]);
+    dd($response);
+});
+
+// Route::post("newsletter", function(){
+//     $mailchimp = new \MailchimpMarketing\ApiClient();
+
+//     $mailchimp->setConfig([
+//         'apiKey' => config("services.mailchimp.key"),
+//         'server' => 'us21'
+//     ]);
+//     request()->validate(["email" => "email|required"]);
+
+//     try {
+//         $response = $mailchimp->lists->addListMember("e098faa1dd", [
+//             "email_address" => request("email"),
+//             "status" => "subscribed"
+//         ]);
+//     } catch (\Exception $e) {
+//         throw \Illuminate\Validation\ValidationException::withMessages([
+//             "email" => "This email could not be added to our newsletter"
+//         ]);
+//     }
+
+//     // $response = $mailchimp->lists->addListMember("e098faa1dd", [
+//     //     "email_address" => request("email"),
+//     //     "status" => "subscribed"
+//     // ]);
+
+//     return back()->with("success", "You are now signed up for our newsletter");
+
+// });
+
+// Route::post("newsletter", function(){
+    
+//     request()->validate(["email" => "email|required"]);
+
+//     try {
+//         $newsletter = new Newsletter();
+//         $newsletter->subscribe(request("email"));    
+//     } catch (\Exception $e) {
+//         throw ValidationException::withMessages([
+//             "email" => "This email could not be added to our newsletter"
+//         ]);
+//     }
+
+    
+//     return back()->with("success", "You are now signed up for our newsletter");
+
+// });
+
+Route::post("newsletter", NewsLetterController::class);
