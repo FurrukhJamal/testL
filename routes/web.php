@@ -183,3 +183,5 @@ Route::get("ping", function(){
 // });
 
 Route::post("newsletter", NewsLetterController::class);
+Route::get("admin/post/create", [PostController::class, "create"])->middleware("admin");
+Route::post("admin/post", [PostController::class, "store"])->middleware("admin");

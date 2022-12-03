@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\Response;
+use Whoops\Run;
 
 class PostController extends Controller
 {
@@ -64,5 +67,32 @@ class PostController extends Controller
         return Post::latest()->filter(request(["search", "category", "author"]))->paginate(6)->withQueryString();
         // dd(request(["search"]));
         // Post::latest()->filter(request(["search"]))->get();
+    }
+
+    public function create(){
+        // if(auth()->guest()){
+        //     // abort(403);
+        //     abort(Response::HTTP_FORBIDDEN);
+        // }
+        // if (auth()->user()->username != "Fjk" ){
+        //     abort(503);
+        // }
+        return view("posts.create");
+    }
+
+    public function store(){
+        $attributes = request()->validate([
+            "title" => "required",
+            "excerpt" => "required",
+            "slug" => ["required", Rule::unique("posts", "slug")],
+            "body" => "required",
+            "category_id" => ["required", Rule::exists("categories", "id")],
+        ]);
+
+        $attributes["user_id"] = auth()->user()->id;
+
+        Post::create($attributes);
+
+        return redirect("/posts");
     }
 }
