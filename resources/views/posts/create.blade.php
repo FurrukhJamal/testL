@@ -2,39 +2,43 @@
 
 @section("content")
     <section class = "px-6 py-8 max-w-sm mx-auto" >
-    <form method = "POST" action="/admin/post">
+        <h1 class = "text-lg font-bold mb-4">Publish new Post</h1>
+    <form method = "POST" action = "/admin/post" enctype="multipart/form-data">
                 @csrf
-        <div class = "mb-6">
+        <x-form.input>
+            <x-slot:type></x-slot:type>
+            title
+        </x-form.input>
+        
+        
+        <x-form.input>
+            <x-slot:type></x-slot:type>
+            slug
+        </x-form.input>
+
+        <x-form.input>
+            thumbnail
+            <x-slot:type>
+                file
+            </x-slot:type>
+        </x-form.input>
+        
+
+        {{--<div class = "mb-6">
                   
-            <label class = "block mb-2 font-bold text-xs text-gray-700" for="title">Title</label>
+            <label class = "block mb-2 font-bold text-xs text-gray-700" for="title">Thumbnail</label>
             <input 
-                type="text" 
+                type="file" 
                 class = "p-2 border border-gray-400 w-full"
-                name = "title"
+                name = "thumbnail"
                 id = "title"
-                value = "{{old("title")}}" 
+                 
                 required>
 
-            @error("title")
-                <p class = "test-xs test-red-500 mt-2">{{$message}}</p>
-            @enderror
-        </div>
-
-        <div class = "mb-6">
-                  
-            <label class = "block mb-2 font-bold text-xs text-gray-700" for="title">Slug</label>
-            <input 
-                type="text" 
-                class = "p-2 border border-gray-400 w-full"
-                name = "slug"
-                id = "title"
-                value = "{{old("slug")}}" 
-                required>
-
-            @error("slug")
+            @error("thumbnail")
                 <p class = "text-xs text-red-400 mt-2">{{$message}}</p>
             @enderror
-        </div>
+        </div>--}}
 
         <div class = "mb-6">
             <label class = "block mb-2 font-bold text-xs text-gray-700" for="excerpt">Excerpt</label>

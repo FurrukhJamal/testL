@@ -56,6 +56,9 @@
                 <x-slot:userName>
                     {{$posts[0]->author->username}}
                 </x-slot:userName>
+                <x-slot:thumbnail>
+                    {{$posts[0]->thumbnail ? asset("storage/" . $posts[0]->thumbnail) : "/images/illustration-1.png"}}
+                </x-slot:thumbnail>
                 
             </x-component-feature>
 
@@ -89,6 +92,9 @@
                         <x-slot:userName>
                             {{$post->author->username}}
                         </x-slot:userName>
+                        <x-slot:thumbNail>
+                            {{$post->thumbnail ? asset("storage/" . $post->thumbnail) : "/images/illustration-3.png"}}
+                        </x-slot:thumbNail>
                     </x-post-card>
                 @endforeach
             </div>
@@ -120,6 +126,9 @@
                         <x-slot:userName>
                             {{$post->author->username}}
                         </x-slot:userName>
+                        <x-slot:thumbNail>
+                            {{$post->thumbnail ? asset("storage/" . $post->thumbnail) : "/images/illustration-3.png"}}
+                        </x-slot:thumbNail>
                         
                     </x-post-card>    
                 @endforeach                  
